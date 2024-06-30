@@ -247,6 +247,30 @@ def create_order() -> None:
     # insert_fast_delivery_db(fast_delivery_data)
 
 
+def restock_inventory() -> None:
+    """
+    Restock the inventory of the FastDelivery ERP system data.
+    """
+    # Create a connection to the SQLite database
+    connection = sqlite3.connect("fastdelivery/fastdelivery.db")
+
+    # connection = psycopg2.connect()
+    cursor = connection.cursor()
+
+    # get all products
+    cursor.execute("SELECT product_id, quantity FROM product;")
+    products = cursor.fetchall()
+
+    # restock inventory
+    for product_id, quantity in products:
+        cursor.execute("UPDATE product SET quantity = ? WHERE product_id = ?;", (quantity + 100, product_id))
+
+    # Commit the transaction
+    connection.commit()
+    
+    # Close the connection
+    connection.close()
+
 
 if __name__ == "__main__":
 
@@ -257,6 +281,10 @@ if __name__ == "__main__":
     # create process to listen to RabbitMQ
     # p = Process(target=listen_rabbitmq)
     # p.start()
+
+    # create process to restock inventory
+    p = Process(target=restock_inventory)
+    p.start()
 
     # create process to simulate each consumer
     num_order = 50
