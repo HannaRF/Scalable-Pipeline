@@ -1,0 +1,201 @@
+product_id,name,price,weight,quantity
+1,Pizza Margherita,30.00,650,100
+2,Hambúrguer Simples,20.00,200,150
+3,Coxinha de Frango,5.50,100,200
+4,Esfiha de Carne,4.00,120,180
+5,Lasanha à Bolonhesa,35.00,800,80
+6,Sushi Misto,45.00,600,120
+7,Salada Caesar,18.00,300,100
+8,Caipirinha de Limão,15.00,250,80
+9,Suco Natural de Laranja,8.00,350,150
+10,Bolo de Chocolate,25.00,500,90
+11,Pastel de Queijo,6.00,150,180
+12,Tapioca de Frango com Queijo,12.00,200,120
+13,Pão de Queijo,3.50,50,250
+14,Crepe de Nutella,22.00,400,100
+15,Petit Gateau,28.00,300,120
+16,Frango à Parmegiana,38.00,700,80
+17,Risoto de Funghi,40.00,600,90
+18,Caldo de Feijão,10.00,350,150
+19,Picanha Grelhada,55.00,900,70
+20,Salada de Frutas,12.00,250,180
+21,Churrasco de Linguiça,18.00,400,130
+22,Empadão de Palmito,15.00,300,150
+23,Brigadeiro,2.50,30,300
+24,Brownie de Chocolate,6.00,80,250
+25,Torta de Limão,20.00,450,100
+26,Empada de Frango,4.50,100,200
+27,Creme de Abóbora,9.00,300,160
+28,Sorvete de Baunilha,12.00,500,120
+29,Bebida Energética,6.50,350,150
+30,Água Mineral,2.00,200,250
+31,Massa Carbonara,32.00,600,100
+32,Sopa de Legumes,8.00,300,180
+33,Wrap de Frango,14.00,250,150
+34,Macarrão à Bolonhesa,28.00,700,100
+35,Pão Francês,1.50,50,300
+36,Salada Caprese,16.00,280,120
+37,Torta de Frango,22.00,500,130
+38,Pamonha,7.00,180,200
+39,Churros,4.00,60,250
+40,Pizza Calabresa,32.00,700,90
+41,Pão de Alho,3.00,60,300
+42,Cachorro-quente,10.00,180,180
+43,Sanduíche Natural de Frango,15.00,300,150
+44,Tiramisù,24.00,350,110
+45,Strogonoff de Carne,40.00,800,80
+46,Salada de Quinoa,18.00,320,140
+47,Batata Frita,12.00,250,160
+48,Caipirinha de Morango,18.00,280,100
+49,Suco Detox,10.00,350,140
+50,Bolo de Cenoura,20.00,450,100
+51,Batata Rústica,15.00,300,150
+52,Crepe de Frango com Catupiry,18.00,350,120
+53,Pão de Queijo Recheado,4.00,60,250
+54,Chá Gelado de Limão,5.00,200,200
+55,Empadão Goiano,16.00,380,130
+56,Pudim de Leite,8.00,150,200
+57,Cupcake de Baunilha,3.50,50,300
+58,Chope Artesanal,12.00,500,100
+59,Quiche Lorraine,18.00,400,120
+60,Salmão Grelhado,50.00,800,90
+61,Pizza Quatro Queijos,35.00,650,80
+62,Hot Dog,10.00,200,160
+63,Wrap de Vegetais,12.00,230,180
+64,Picadinho à Brasileira,30.00,600,100
+65,Salada de Folhas Verdes,14.00,250,160
+66,Carpaccio de Carne,25.00,300,130
+67,Torta Holandesa,30.00,500,110
+68,Sopa de Cebola,9.00,280,180
+69,Costela ao Barbecue,42.00,900,70
+70,Salada Waldorf,16.00,280,140
+71,Guacamole,8.00,200,200
+72,Pastel de Nutella,8.00,120,200
+73,Sorvete de Chocolate,10.00,450,130
+74,Moqueca de Peixe,38.00,700,80
+75,Arroz de Camarão,45.00,750,90
+76,Salada de Frango,18.00,300,160
+77,Pizza Portuguesa,32.00,700,90
+78,Pão de Mel,5.00,70,250
+79,Frango Xadrez,28.00,600,110
+80,Salada Caesar com Frango,22.00,350,130
+81,Paella Valenciana,48.00,800,80
+82,Pastel de Carne,6.00,150,180
+83,Tapioca de Queijo,10.00,180,160
+84,Crepe de Chocolate,20.00,400,100
+85,Bruschetta de Tomate,12.00,250,150
+86,Caipirinha de Maracujá,16.00,300,120
+87,Limonada Suíça,5.00,200,180
+88,Torta de Maçã,18.00,400,120
+89,Empada de Palmito,5.00,100,220
+90,Escondidinho de Carne Seca,30.00,600,100
+91,Torta de Frutas Vermelhas,25.00,450,110
+92,Coxinha de Jaca,6.50,120,180
+93,Sopa de Capeletti,10.00,300,160
+94,Mousse de Maracujá,8.00,180,200
+95,Bombom de Morango,3.00,50,300
+96,Bolo Red Velvet,28.00,500,90
+97,Lasanha Vegetariana,32.00,750,80
+98,Crepe de Nutella com Morango,25.00,450,100
+99,Suco Detox de Abacaxi,10.00,350,140
+100,Torta de Limão com Merengue,22.00,500,110
+101,Churrasco de Picanha,50.00,900,100
+102,Salada Grega,20.00,300,150
+103,Croissant de Presunto e Queijo,10.00,120,200
+104,Sanduíche de Atum,15.00,250,180
+105,Sopa de Abóbora,12.00,350,180
+106,Bolo de Milho,18.00,450,150
+107,Suco de Morango,8.00,300,200
+108,Pudim de Chocolate,10.00,250,180
+109,Rocambole de Doce de Leite,20.00,400,120
+110,Panqueca de Frango,18.00,300,150
+111,Quibe Frito,5.00,100,250
+112,Brigadeirão,25.00,600,100
+113,Esfiha de Queijo,4.50,120,200
+114,Creme de Milho,9.00,350,150
+115,Torta de Abacaxi,22.00,500,110
+116,Pão de Alho com Queijo,5.00,80,250
+117,Suco de Melancia,7.00,300,200
+118,Caipirinha de Uva,18.00,280,100
+119,Moqueca de Camarão,45.00,700,80
+120,Tapioca de Doce de Leite,12.00,180,160
+121,Empada de Camarão,6.00,100,200
+122,Quiche de Espinafre,18.00,350,130
+123,Sorvete de Morango,10.00,450,140
+124,Torta de Banana,20.00,500,110
+125,Arroz Carreteiro,25.00,600,100
+126,Sanduíche de Frango com Catupiry,14.00,300,150
+127,Coxinha de Calabresa,6.50,120,180
+128,Chá Mate Gelado,5.00,200,200
+129,Pamonha Doce,8.00,200,180
+130,Salada de Bacalhau,30.00,400,100
+131,Tapioca de Carne Seca,14.00,180,160
+132,Cupcake de Chocolate,4.00,50,250
+133,Espetinho de Frango,8.00,150,200
+134,Coxinha de Carne,5.50,120,220
+135,Sorvete de Coco,10.00,450,130
+136,Torta de Coco,22.00,500,110
+137,Suco de Acerola,7.00,300,200
+138,Salada de Alface e Tomate,10.00,250,160
+139,Bolo de Fubá,18.00,450,120
+140,Churros Recheado,5.00,100,200
+141,Crepe de Doce de Leite,20.00,400,130
+142,Pastel de Pizza,6.00,150,180
+143,Salada de Frango com Abacaxi,18.00,300,150
+144,Suco de Manga,8.00,300,200
+145,Torta de Limão com Coco,22.00,500,110
+146,Pizza de Frango com Catupiry,35.00,700,90
+147,Pão Integral,4.00,100,250
+148,Creme de Palmito,10.00,350,160
+149,Sanduíche de Queijo e Presunto,12.00,250,180
+150,Petit Four,3.00,50,300
+151,Brigadeiro Gourmet,3.50,30,300
+152,Caldo Verde,12.00,350,140
+153,Caipirinha de Abacaxi,18.00,280,100
+154,Salada de Frutas Tropicais,14.00,250,180
+155,Torta de Amendoim,22.00,500,110
+156,Suco de Maracujá,7.00,300,200
+157,Panqueca de Carne,18.00,300,150
+158,Sorvete de Creme,10.00,450,130
+159,Empadinha de Queijo,4.50,100,200
+160,Esfiha de Espinafre,5.00,120,180
+161,Coxinha de Peito de Peru,6.50,120,180
+162,Quiche de Queijo,18.00,350,130
+163,Crepe de Queijo com Tomate Seco,22.00,400,120
+164,Tapioca de Chocolate,12.00,180,160
+165,Pão de Queijo com Requeijão,4.00,80,250
+166,Suco de Acerola com Laranja,8.00,300,200
+167,Churros de Doce de Leite,5.00,100,200
+168,Salada de Pepino com Iogurte,14.00,250,160
+169,Torta de Maçã com Canela,22.00,500,110
+170,Coxinha de Frango com Requeijão,6.50,120,180
+171,Bolo de Chocolate com Morango,25.00,500,90
+172,Pastel de Bacalhau,7.00,150,160
+173,Caipirinha de Caju,18.00,280,100
+174,Crepe de Banana com Nutella,22.00,400,120
+175,Sanduíche de Frango com Alface,15.00,300,150
+176,Suco de Laranja com Cenoura,8.00,300,200
+177,Sorvete de Maracujá,10.00,450,130
+178,Esfiha de Calabresa,5.50,120,200
+179,Coxinha de Camarão,7.00,120,180
+180,Empadão de Carne Seca,20.00,500,120
+181,Pão de Mel com Chocolate,6.00,80,250
+182,Salada de Cenoura com Maionese,10.00,250,160
+183,Quibe de Abóbora,6.00,150,180
+184,Torta de Limão com Merengue Suíço,24.00,500,110
+185,Brigadeiro de Colher,4.00,50,250
+186,Caipirinha de Frutas Vermelhas,20.00,280,100
+187,Sopa de Mandioquinha,12.00,350,140
+188,Tapioca de Banana,10.00,180,160
+189,Panqueca de Espinafre com Ricota,20.00,300,150
+190,Sanduíche de Peito de Peru,14.00,250,180
+191,Bolo de Cenoura com Chocolate,22.00,500,110
+192,Pizza de Atum,32.00,700,90
+193,Churros de Nutella,6.00,120,200
+194,Suco de Melão,7.00,300,200
+195,Crepe de Doce de Leite com Coco,20.00,400,120
+196,Salada de Beterraba,10.00,250,160
+197,Pão de Queijo com Goiabada,5.00,80,250
+198,Torta de Maracujá,22.00,500,110
+199,Sorvete de Abacaxi,10.00,450,130
+200,Empadinha de Palmito,5.00,100,200

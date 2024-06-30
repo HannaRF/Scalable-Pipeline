@@ -130,13 +130,26 @@ def create_fast_delivery_db() -> None:
     );
     """)
 
+    # insert consumers
+    with open("fastdelivery/consumer.csv", "r") as file:
+        reader = csv.reader(file)
+        next(reader)
+        for row in reader:
+            cursor.execute("INSERT INTO consumer VALUES (?, ?, ?, ?, ?);", row)
 
-    # # insert products from products.csv
-    # with open("fast_delivery/fast_delivery.csv", "r") as file:
-    #     reader = csv.reader(file)
-    #     next(reader)
-    #     for row in reader:
-    #         cursor.execute("INSERT INTO products VALUES (?, ?, ?, ?, ?);", row)
+    # insert stores
+    with open("fastdelivery/store.csv", "r") as file:
+        reader = csv.reader(file)
+        next(reader)
+        for row in reader:
+            cursor.execute("INSERT INTO store VALUES (?, ?, ?, ?, ?);", row)
+    
+    # insert products
+    with open("fastdelivery/product.csv", "r") as file:
+        reader = csv.reader(file)
+        next(reader)
+        for row in reader:
+            cursor.execute("INSERT INTO product VALUES (?, ?, ?, ?, ?);", row)
 
     # Commit the transaction
     connection.commit()
@@ -145,7 +158,7 @@ def create_fast_delivery_db() -> None:
     connection.close()
 
 
-# def insert_fast_delivery_db(spreadsheets: Dict[str, List[Dict[str, Any]]]) -> None:
+# def update_fast_delivery_db(spreadsheets: Dict[str, List[Dict[str, Any]]]) -> None:
 #     """
 #     Save a list of log entries to a PostgreSQL database.
 
@@ -194,7 +207,7 @@ def create_fast_delivery_db() -> None:
 #     connection.close()
 
 
-def create_order(consumer_id : int, num_stores :int) -> None:
+def create_order() -> None:
     """
     Simulate the FastDelivery ERP system data.
 
@@ -205,61 +218,29 @@ def create_order(consumer_id : int, num_stores :int) -> None:
         A dictionary with keys for each data type (users, products, inventory, orders)
         and values as lists of dictionaries representing each item or transaction.
     """
-    spreadsheet_names = ["Andres", 
-                         "Harry", 
-                         "Shakira", 
-                         "Alexandre", 
-                         "Thanos", 
-                         "Annabeth", 
-                         "Deide"]
-    
-    spreadsheet_surname = ["D'Alessandro", 
-                           "Potter", 
-                           "Mebarak", 
-                           "de Moraes", 
-                           "Pereira", 
-                           "Chase", 
-                           "Costa"]
-    
-    spreadsheet_neighborhood = ["Centro",
-                                "Barra da Tijuca",
-                                "Botafogo",
-                                "Ipanema",
-                                "Leblon",
-                                "Laranjeiras",
-                                "Gávea"]
-    
-    # Consumer
-    consumer = {"consumer_id": consumer_id,
-                "name": random.choice(spreadsheet_names),
-                "surname": random.choice(spreadsheet_surname),
-                "birthday": generate_random_date(start=datetime.datetime(1950, 1, 1), end=datetime.datetime.now() - relativedelta(years=18)).isoformat(),
-                "neighborhood": random.choice(spreadsheet_neighborhood)}
 
-    # choose a store
-    store_id = random.randint(1, num_stores)
-
-    # create order
-    product_id = random.randint(1, 400)
+    consumer_id = random.randint(1, 300)
+    store_id = random.randint(1, 300)
+    product_id = random.randint(1, 200)
 
     creation_date = generate_recent_date(24)  # Focus on the last 24 hours
 
+    # read the product price
+    connection = sqlite3.connect("fastdelivery/fastdelivery.db")
+    cursor = connection.cursor()
+    cursor.execute("SELECT price,quantity FROM product WHERE product_id = ?;", (product_id,))
+    price = cursor.fetchone()[0]
+    quantity = cursor.fetchone()[1]
+    connection.close()
+    
     quote = {"user_id": consumer_id,
             "store_id": store_id,
             "product_id": product_id,
-
-            ######## falta controle de estoque / produto deve estar disponível em estoque
-            "price": random.uniform(10, 100),
-            "quantity": random.randint(1, 10),
-
+            "price": price,
+            # garantimos que o produto está no estoque
+            "quantity": random.randint(1, quantity),
             "creation_date": creation_date,
-            "status": "created"}    
-    
-
-    fast_delivery_data =  {"users": consumer,
-                        # "products": product,
-                        # "inventory": inventory,
-                        "orders": quote}
+            "status": "created"}
 
     # Joga pro Broker colocar no banco
 
@@ -278,12 +259,11 @@ if __name__ == "__main__":
     # p.start()
 
     # create process to simulate each consumer
-    num_consumers = 5
-    num_stores = 10
+    num_order = 50
     processes = []
     
-    for consumer_id in range(1, num_consumers+1):
-        p = Process(target=create_order, args=(consumer_id, num_stores))
+    for consumer_id in range(1, num_order+1):
+        p = Process(target=create_order)
         p.start()
         processes.append(p)
 
