@@ -37,14 +37,6 @@ if __name__ == "__main__":
     if not os.path.exists("fastdelivery/fastdelivery.db"):
         create_fast_delivery_db()
 
-    # create process to listen to RabbitMQ
-    # p = Process(target=listen_rabbitmq)
-    # p.start()
-
-    # create process to restock inventory
-    p = Process(target=restock_inventory)
-    p.start()
-
     # create process to simulate each consumer
     num_order = 10
     processes = []

@@ -153,30 +153,4 @@ def create_order(delay_max: int = 5) -> None:
     return quote
 
 
-def restock_inventory() -> None:
-    """
-    Restock the inventory of the FastDelivery ERP system data.
-    """
-    # Create a connection to the SQLite database
-    connection = sqlite3.connect("fastdelivery/fastdelivery.db")
-
-    # connection = psycopg2.connect()
-    cursor = connection.cursor()
-
-    # get all products
-    cursor.execute("SELECT product_id, quantity FROM product;")
-    products = cursor.fetchall()
-
-    # restock inventory
-    for product_id, quantity in products:
-        cursor.execute("UPDATE product SET quantity = ? WHERE product_id = ?;", (quantity + 100, product_id))
-
-    # Commit the transaction
-    connection.commit()
-    
-    # Close the connection
-    connection.close()
-
-
-
     
