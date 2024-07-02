@@ -69,6 +69,8 @@ def create_fast_delivery_db() -> None:
         quantity INTEGER,
         creation_date TEXT,
         status TEXT,
+        distance FLOAT,
+        price FLOAT,
         PRIMARY KEY (consumer_id, store_id, product_id, creation_date)
     );
     """)
@@ -147,7 +149,9 @@ def create_order(delay_max: int = 5) -> None:
             # garantimos que o produto está no estoque
             "quantity": random.randint(1, quantity),
             "creation_date": creation_date,
-            "status": "created"}
+            "status": "created",
+            "distance": -1,
+            "price": -1}
 
     # Return the generated data
     return quote
