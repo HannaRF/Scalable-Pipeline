@@ -17,6 +17,17 @@ def update_product(product, quantity_to_remove):
         connection.commit()
         connection.close()
 
+def update_status(quote_id, status):
+    # Create a connection to the SQLite database
+    connection = sqlite3.connect("fastdelivery/fastdelivery.db")
+    cursor = connection.cursor()
+
+    # Update the quote status
+    with lock:
+        cursor.execute("UPDATE quote SET status = ? WHERE quote_id = ?;", (status, quote_id))
+        connection.commit()
+        connection.close()
+
 
 def update_quotes():
     # path to jdbc driver
@@ -40,6 +51,18 @@ def update_quotes():
         dbtable="product"
     ).load()
 
+    # Read the store table from the database
+    stores = spark.read.format("jdbc").options(
+        url="jdbc:sqlite:fastdelivery/fastdelivery.db",
+        dbtable="store"
+    ).load()
+
+    # Read the consumer table from the database
+    consumers = spark.read.format("jdbc").options(
+        url="jdbc:sqlite:fastdelivery/fastdelivery.db",
+        dbtable="consumer"
+    ).load()
+
     # filter the quotes that have status 'created'
     quotes = quotes.filter(col("status") == "created")
 
@@ -54,6 +77,6 @@ def update_quotes():
 
     # Update the quotes
     for quote in quote_ids:
-        pool.apply_async(update_product, args=(quote[0], 1))
+        pool.apply_async(update_status, args=(quote["quote_id"], quote["status"]))
 
 update_quotes()
