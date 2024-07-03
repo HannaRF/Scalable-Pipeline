@@ -97,6 +97,8 @@ def create_fast_delivery_db(num_neighborhoods : int = 44) -> None:
 
     lst_neighborhoods_chosen = random.sample(lst_neighborhoods, num_neighborhoods)
 
+    lst_neighborhoods_chosen.to_csv("fastdelivery/neighborhoods_chosen.csv", index=False)
+
     # insert consumers
     with open("fastdelivery/consumer.csv", "r", encoding="latin1") as file:
         reader = csv.reader(file)
