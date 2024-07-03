@@ -26,7 +26,8 @@ def generate_recent_date(hours=6) -> str:
 
     return random_date.isoformat()
 
-def create_fast_delivery_db() -> None:
+
+def create_fast_delivery_db(num_neighborhoods : int = 44) -> None:
     """
     Create a SQLite database to store the FastDelivery ERP system data.
 
@@ -84,19 +85,33 @@ def create_fast_delivery_db() -> None:
     );
     """)
 
+    # 44 neighborhoods
+    lst_neighborhoods = ['Vila Isabel', 'Moema', 'Bangu', 'Jardim Botanico', 'Jabaquara', 
+                        'Analia Franco', 'Catete', 'Leblon', 'Santana', 'Urca', 'Pinheiros',
+                        'Perdizes', 'Gloria', 'Grajau', 'Vila Madalena', 'Pompeia', 'Bela Vista',
+                        'Sao Conrado', 'Laranjeiras', 'Santa Teresa', 'Jardins', 'Itaim Bibi',
+                        'Liberdade', 'Barra da Tijuca', 'Centro (SP)', 'Centro', 'Freguesia do O',
+                        'Lapa', 'Copacabana', 'Brooklin', 'Tatuape', 'Cidade Jardim', 'Recreio dos Bandeirantes',
+                        'Morumbi', 'Tijuca', 'Ipanema', 'Butanta', 'Vila Mariana', 'Higienopolis', 'Santo Amaro',
+                        'Chacara Flora', 'Botafogo', 'Flamengo', 'Madureira']
+
+    lst_neighborhoods_chosen = random.sample(lst_neighborhoods, num_neighborhoods)
+
     # insert consumers
     with open("fastdelivery/consumer.csv", "r", encoding="latin1") as file:
         reader = csv.reader(file)
         next(reader)
         for row in reader:
-            cursor.execute("INSERT INTO consumer VALUES (?, ?, ?, ?, ?);", row)
+            if row[3] in lst_neighborhoods_chosen:
+                cursor.execute("INSERT INTO consumer VALUES (?, ?, ?, ?, ?);", row)
 
     # insert stores
     with open("fastdelivery/store.csv", "r", encoding="latin1") as file:
         reader = csv.reader(file)
         next(reader)
         for row in reader:
-            cursor.execute("INSERT INTO store VALUES (?, ?, ?, ?);", row)
+            if row[2] in lst_neighborhoods_chosen:
+                cursor.execute("INSERT INTO store VALUES (?, ?, ?, ?);", row)
     
     # insert products
     with open("fastdelivery/product.csv", "r", encoding="latin1") as file:
@@ -154,4 +169,18 @@ def create_order(delay_max: int = 5) -> None:
     return quote
 
 
+def delete_fast_delivery_db() -> None:
+    """
+    Delete the FastDelivery SQLite database.
+
+    Returns:
+        None
+    """
+    if os.path.exists("fastdelivery/fastdelivery.db"):
+        os.remove("fastdelivery/fastdelivery.db")
+    else:
+        print("The file does not exist")
+
+if __name__ == "__main__":
+    create_fast_delivery_db()
     
