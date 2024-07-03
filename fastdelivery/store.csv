@@ -1,31 +1,45 @@
 store_id,store_name,neighborhood,weight_tax
-1,Loja A,Copacabana,5.13
-2,Loja B,Ipanema,6.45
-3,Loja C,Botafogo,7.21
-4,Loja D,Leblon,8.32
-5,Loja E,Barra da Tijuca,4.57
-6,Loja F,Recreio dos Bandeirantes,5.89
-7,Loja G,Tijuca,7.13
-8,Loja H,Centro,6.78
-9,Loja I,Santa Teresa,7.56
-10,Loja J,Laranjeiras,8.47
-11,Loja K,Flamengo,5.67
-12,Loja L,Moema,6.79
-13,Loja M,Vila Mariana,7.34
-14,Loja N,Pompeia,8.23
-15,Loja O,Jardins,5.34
-16,Loja P,Pinheiros,6.45
-17,Loja Q,Morumbi,7.67
-18,Loja R,Brooklin,8.12
-19,Loja S,Santana,5.78
-20,Loja T,Vila Madalena,6.89
-21,Loja U,Tatuape,7.45
-22,Loja V,Itaim Bibi,8.56
-23,Loja W,Centro (SP),5.34
-24,Loja X,Bela Vista,6.78
-25,Loja Y,Liberdade,7.89
-26,Loja Z,Cidade Jardim,8.34
-27,Loja AA,Analia Franco,5.78
-28,Loja AB,Chacara Flora,6.89
-29,Loja AC,Perdizes,7.34
-30,Loja AD,Jabaquara,8.23
+1,Loja A,Vila Isabel,12.5
+2,Loja B,Moema,10.0
+3,Loja C,Bangu,15.0
+4,Loja D,Jardim Botanico,8.0
+5,Loja E,Jabaquara,11.5
+6,Loja F,Analia Franco,9.0
+7,Loja G,Catete,13.0
+8,Loja H,Leblon,7.5
+9,Loja I,Santana,12.0
+10,Loja J,Urca,10.5
+11,Loja K,Pinheiros,11.0
+12,Loja L,Perdizes,9.5
+13,Loja M,Gloria,13.5
+14,Loja N,Grajau,14.0
+15,Loja O,Vila Madalena,8.5
+16,Loja P,Pompeia,12.5
+17,Loja Q,Bela Vista,7.0
+18,Loja R,Sao Conrado,10.0
+19,Loja S,Laranjeiras,15.5
+20,Loja T,Santa Teresa,14.0
+21,Loja U,Jardins,9.5
+22,Loja V,Itaim Bibi,8.0
+23,Loja W,Liberdade,11.0
+24,Loja X,Barra da Tijuca,12.0
+25,Loja Y,Centro (SP),13.0
+26,Loja Z,Centro,10.5
+27,Loja AA,Freguesia do O,14.5
+28,Loja AB,Lapa,13.5
+29,Loja AC,Copacabana,12.0
+30,Loja AD,Brooklin,11.5
+31,Loja AE,Tatuape,9.0
+32,Loja AF,Cidade Jardim,10.0
+33,Loja AG,Recreio dos Bandeirantes,12.5
+34,Loja AH,Morumbi,13.0
+35,Loja AI,Tijuca,10.0
+36,Loja AJ,Ipanema,8.5
+37,Loja AK,Butanta,9.5
+38,Loja AL,Vila Mariana,11.0
+39,Loja AM,Higienopolis,12.5
+40,Loja AN,Santo Amaro,14.0
+41,Loja AO,Chacara Flora,13.0
+42,Loja AP,Botafogo,10.5
+43,Loja AQ,Flamengo,9.0
+44,Loja AR,Madureira,11.5
