@@ -157,7 +157,7 @@ def create_order(delay_max: int = 5) -> None:
             "quantity": random.randint(1, 10),
             "creation_date": creation_date,
             "status": "created",
-            "total_cost": -1}
+            "total_cost": 0}
 
     # Return the generated data
     return quote
