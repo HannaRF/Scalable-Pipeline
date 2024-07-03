@@ -34,6 +34,18 @@ def create_fast_delivery_db(num_neighborhoods : int = 44) -> None:
     Returns:
         None
     """
+    # 44 neighborhoods
+    lst_neighborhoods = ['Vila Isabel', 'Moema', 'Bangu', 'Jardim Botanico', 'Jabaquara', 
+                        'Analia Franco', 'Catete', 'Leblon', 'Santana', 'Urca', 'Pinheiros',
+                        'Perdizes', 'Gloria', 'Grajau', 'Vila Madalena', 'Pompeia', 'Bela Vista',
+                        'Sao Conrado', 'Laranjeiras', 'Santa Teresa', 'Jardins', 'Itaim Bibi',
+                        'Liberdade', 'Barra da Tijuca', 'Centro (SP)', 'Centro', 'Freguesia do O',
+                        'Lapa', 'Copacabana', 'Brooklin', 'Tatuape', 'Cidade Jardim', 'Recreio dos Bandeirantes',
+                        'Morumbi', 'Tijuca', 'Ipanema', 'Butanta', 'Vila Mariana', 'Higienopolis', 'Santo Amaro',
+                        'Chacara Flora', 'Botafogo', 'Flamengo', 'Madureira']
+
+    lst_neighborhoods_chosen = random.sample(lst_neighborhoods, num_neighborhoods)
+
     # Create a connection to the SQLite database
     connection = sqlite3.connect("fastdelivery/fastdelivery.db")
 
@@ -83,20 +95,6 @@ def create_fast_delivery_db(num_neighborhoods : int = 44) -> None:
     );
     """)
 
-    # 44 neighborhoods
-    lst_neighborhoods = ['Vila Isabel', 'Moema', 'Bangu', 'Jardim Botanico', 'Jabaquara', 
-                        'Analia Franco', 'Catete', 'Leblon', 'Santana', 'Urca', 'Pinheiros',
-                        'Perdizes', 'Gloria', 'Grajau', 'Vila Madalena', 'Pompeia', 'Bela Vista',
-                        'Sao Conrado', 'Laranjeiras', 'Santa Teresa', 'Jardins', 'Itaim Bibi',
-                        'Liberdade', 'Barra da Tijuca', 'Centro (SP)', 'Centro', 'Freguesia do O',
-                        'Lapa', 'Copacabana', 'Brooklin', 'Tatuape', 'Cidade Jardim', 'Recreio dos Bandeirantes',
-                        'Morumbi', 'Tijuca', 'Ipanema', 'Butanta', 'Vila Mariana', 'Higienopolis', 'Santo Amaro',
-                        'Chacara Flora', 'Botafogo', 'Flamengo', 'Madureira']
-
-    lst_neighborhoods_chosen = random.sample(lst_neighborhoods, num_neighborhoods)
-
-    lst_neighborhoods_chosen.to_csv("fastdelivery/neighborhoods_chosen.csv", index=False)
-
     # insert consumers
     with open("fastdelivery/consumer.csv", "r", encoding="latin1") as file:
         reader = csv.reader(file)
@@ -125,6 +123,11 @@ def create_fast_delivery_db(num_neighborhoods : int = 44) -> None:
     
     # Close the connection
     connection.close()
+
+
+    # save the neighborhoods chosen
+    lst_neighborhoods_chosen = pd.DataFrame(lst_neighborhoods_chosen, columns=["neighborhood"])
+    lst_neighborhoods_chosen.to_csv("fastdelivery/neighborhoods_chosen.csv", index=False)
 
 
 def create_order(delay_max: int = 5) -> None:
