@@ -40,11 +40,12 @@ if __name__ == "__main__":
     # create process to simulate each consumer
     num_order = 10
     processes = []
-    
-    for consumer_id in range(1, num_order+1):
-        p = Process(target=create_order_and_publish)
-        p.start()
-        processes.append(p)
 
-    for p in processes:
-        p.join()
+    for i in range(5):
+        for consumer_id in range(1, num_order+1):
+            p = Process(target=create_order_and_publish)
+            p.start()
+            processes.append(p)
+
+        for p in processes:
+            p.join()

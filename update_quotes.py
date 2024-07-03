@@ -1,5 +1,7 @@
 import sqlite3
 import pandas as pd
+import time
+import random
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, lit
 from multiprocessing import Pool, Lock
@@ -53,7 +55,10 @@ def update_quotes():
     ).load()
 
     # Get only product_id, price and weight columns
-    products = products.select("product_id", "price", "weight")
+    products = products.select("product_id", "price", "weight", "quantity")
+
+    # rename the columns quantity to available_quantity
+    products = products.withColumnRenamed("quantity", "available_quantity")
 
     # Read the store table from the database
     stores = spark.read.format("jdbc").options(
@@ -77,19 +82,20 @@ def update_quotes():
     consumers = consumers.withColumnRenamed("neighborhood", "consumer_neighborhood")
 
     # filter the quotes that have status 'created'
-    quotes = quotes.filter(col("status") == "created")
+    #quotes = quotes.filter(col("status") == "created")
+    #quotes.show()
 
     # change all quotes status to 'pending'
     quotes = quotes.withColumn("status", lit("pending"))
 
     # join the quotes with the products
-    quotes = quotes.join(products, quotes.product_id == products.product_id)
+    quotes = quotes.join(products, "product_id", "inner")
 
     # join the quotes with the stores
-    quotes = quotes.join(stores, quotes.store_id == stores.store_id)
+    quotes = quotes.join(stores, "store_id", "inner")
 
     # join the quotes with the consumers
-    quotes = quotes.join(consumers, quotes.consumer_id == consumers.consumer_id)
+    quotes = quotes.join(consumers, "consumer_id", "inner")
 
     # calculate the total cost of the quote
     quotes = quotes.withColumn("total_cost", quotes.price * quotes.quantity + quotes.quantity * quotes.weight / 1000 * quotes.weight_tax)
@@ -105,6 +111,31 @@ def update_quotes():
     # Update the quotes
     for quote in quote_ids:
         update_status_and_total_cost(quote.quote_id, quote.status, quote.total_cost)
+
+    time.sleep(10)
+
+    # status "cancelled" for quotes that have quantity greater than available_quantity
+    quotes_cancelled = quotes.filter(col("quantity") > col("available_quantity"))
+    quote_ids = quotes_cancelled.select("quote_id", "status").collect()
+
+    for quote in quote_ids:
+        update_status_and_total_cost(quote.quote_id, "cancelled", -1)
+
+    # status "confirmed" for quotes that have quantity less than or equal to available_quantity
+    quotes_confirmed = quotes.filter(col("quantity") <= col("available_quantity"))
+
+    # Collect the quote_ids and quantity
+    quote_ids = quotes_confirmed.select("quote_id", "product_id", "quantity", "total_cost").collect()
+
+    # there is a chance of 50% to confirm the quote
+    for quote in quote_ids:
+        if random.random() <= 0.5:
+            update_product(quote.product_id, quote.quantity)
+            update_status_and_total_cost(quote.quote_id, "confirmed", quote.total_cost)
+        else:
+            update_status_and_total_cost(quote.quote_id, "refused", -1)
+
+
 
 
 update_quotes()
