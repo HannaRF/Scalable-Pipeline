@@ -5,10 +5,11 @@ from graphframes import *
 import os
 
 # Função para criar o grafo da cidade
-def create_city_graph():
+def calculate_distance(origin, destination):
 
     os.environ["HADOOP_HOME"] = "C:\\hadoop"
     os.environ["hadoop.home.dir"] = "C:\\hadoop"
+    os.environ["PYTHONPATH"] = "C:\\Users\\data_adaggio_2024\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe"
 
     driver = 'fastdelivery\\graphframes-0.8.3-spark3.5-s_2.12.jar'
 
@@ -17,42 +18,54 @@ def create_city_graph():
         .config("spark.driver.extraClassPath", driver) \
         .getOrCreate()
     
-    # Ler o arquivo CSV
-    df = pd.read_csv("fastdelivery/neighborhoods_chosen.csv")
-    
-    # Selecionar um número definido de neighborhoods únicos
-    neighborhoods_chosen = df['neighborhood'].unique()
-    
-    # Criar DataFrame de vértices
-    vertices = spark.createDataFrame(pd.DataFrame(neighborhoods_chosen, columns=["id"]))
-    
-    # Criar DataFrame de arestas
-    edges_list = []
-    for neighborhood in neighborhoods_chosen:
-        num_frontiers = random.randint(1, 5)
-        frontiers = random.sample(list(neighborhoods_chosen), num_frontiers)
-        for frontier in frontiers:
-            if neighborhood != frontier:
-                edges_list.append((neighborhood, frontier))
-    
-    edges = spark.createDataFrame(pd.DataFrame(edges_list, columns=["src", "dst"]))
+    g = None
 
-    print('Fazendo Grafico')
+    if not os.path.exists(r"fastdelivery/vertices") and not os.path.exists(r"fastdelivery/edges"):
+        print("Criando vértices e arestas...")
 
-    g = GraphFrame(vertices, edges)
+        # Selecionar um número definido de neighborhoods únicos 
+        df = pd.read_csv("fastdelivery/neighborhoods_chosen.csv")
+        neighborhoods_chosen = df['neighborhood'].unique()
+        
+        # Criar DataFrame de vértices
+        vertices = spark.createDataFrame(pd.DataFrame(neighborhoods_chosen, columns=["id"]))
+        
+        # Criar DataFrame de arestas
+        edges_list = []
+        for neighborhood in neighborhoods_chosen:
+            num_frontiers = random.randint(1, 5)
+            frontiers = random.sample(list(neighborhoods_chosen), num_frontiers)
+            for frontier in frontiers:
+                if neighborhood != frontier:
+                    edges_list.append((neighborhood, frontier))
+        
+        edges = spark.createDataFrame(pd.DataFrame(edges_list, columns=["src", "dst"]))
 
-    print('Foi!')
+        # Salvar vértices e arestas
+        g = GraphFrame(vertices, edges)
+        g.vertices.write.parquet(r"fastdelivery/vertices", mode="append")
+        g.edges.write.parquet(r"fastdelivery/edges", mode="append")
 
-    
-    # # Mostrar vértices e arestas
-    # g.vertices.show()
-    # g.edges.show()
-    
-    # # Aqui, imprimimos a estrutura do grafo
-    # g.edges.groupBy("src").count().show()
-    
+    else:
+        # Carregar vértices e arestas
+        vertices = spark.read.parquet(r"fastdelivery/vertices")
+        edges = spark.read.parquet(r"fastdelivery/edges")
+        g = GraphFrame(vertices, edges)
+
+    print("Criando o grafo...")
+    # Encontrar o menor caminho entre dois bairros
+    shortest_path = g.shortestPaths(landmarks=[origin, destination])
+    # Selecionar o menor caminho
+    shortest_path = shortest_path.select("id", "distances").show()#.collect()
+
     spark.stop()
+
+    return shortest_path
 
 
 if __name__ == "__main__":
-    create_city_graph()
+    distance = calculate_distance(origin="Copacabana", destination="Botafogo")
+
+    print(distance)
+
+
