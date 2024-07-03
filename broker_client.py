@@ -20,7 +20,7 @@ def publish_event(event):
     print(f"Sent event {event}")
     connection.close()
 
-def create_order_and_publish(delay_max: int = 30) -> None:
+def create_order_and_publish(delay_max: int = 5) -> None:
     """
     Simulates the creation of an order in the FastDelivery ERP system.
     """
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     num_order = 10
     processes = []
 
-    for i in range(5):
+    while True:
         for consumer_id in range(1, num_order+1):
             p = Process(target=create_order_and_publish)
             p.start()
@@ -49,3 +49,5 @@ if __name__ == "__main__":
 
         for p in processes:
             p.join()
+        
+        time.sleep(10)
