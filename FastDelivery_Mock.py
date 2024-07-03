@@ -79,8 +79,8 @@ def create_fast_delivery_db() -> None:
     CREATE TABLE IF NOT EXISTS store (
         store_id INTEGER PRIMARY KEY,
         name TEXT,
-        weight_tax FLOAT,
-        neighborhood TEXT
+        neighborhood TEXT,
+        weight_tax FLOAT
     );
     """)
 
