@@ -10,7 +10,9 @@ def consume_messages_from_rabbitmq():
         conn = sqlite3.connect('fastdelivery/fastdelivery.db')
         cursor = conn.cursor()
 
-        query = "INSERT INTO quote VALUES ({})".format(", ".join("?" * len(event.values())))
+        query = """INSERT INTO quote (consumer_id, store_id, product_id, price, quantity, creation_date, status, distance, total_cost)
+                    VALUES ({})
+        """.format(", ".join("?" * len(event.values())))
 
         with lock:
             cursor.execute(query, tuple(event.values()))
