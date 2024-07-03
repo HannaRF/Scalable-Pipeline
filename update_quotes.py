@@ -46,11 +46,14 @@ def update_quotes():
     # change all quotes status to 'pending'
     quotes = quotes.withColumn("status", lit("pending"))
 
-    # update the quotes table in the database
-    quotes.write.format("jdbc").options(
-        url="jdbc:sqlite:fastdelivery/fastdelivery.db",
-        dbtable="quote",
-        driver="org.sqlite.JDBC"
-    ).mode("overwrite").save()
+    # Collect the quote_ids and status
+    quote_ids = quotes.select("quote_id", "status").collect()
+
+    # Create a pool of workers
+    pool = Pool()
+
+    # Update the quotes
+    for quote in quote_ids:
+        pool.apply_async(update_product, args=(quote[0], 1))
 
 update_quotes()

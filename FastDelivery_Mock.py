@@ -66,11 +66,9 @@ def create_fast_delivery_db() -> None:
         consumer_id FLOAT,
         store_id INTEGER,
         product_id INTEGER,
-        price FLOAT,
         quantity INTEGER,
         creation_date TEXT,
         status TEXT,
-        distance FLOAT,
         total_cost FLOAT
     );
     """)
@@ -132,22 +130,13 @@ def create_order(delay_max: int = 5) -> None:
     product_id = random.randint(1, 200)
 
     creation_date = generate_recent_date(24)  # Focus on the last 24 hours
-
-    # read the product price
-    connection = sqlite3.connect("fastdelivery/fastdelivery.db")
-    cursor = connection.cursor()
-    cursor.execute("SELECT price, quantity FROM product WHERE product_id = {}".format(product_id))
-    price, quantity = cursor.fetchall()[0]
-    connection.close()
     
     quote = {"user_id": consumer_id,
             "store_id": store_id,
             "product_id": product_id,
-            "price": price,
             "quantity": random.randint(1, 10),
             "creation_date": creation_date,
             "status": "created",
-            "distance": -1,
             "total_cost": -1}
 
     # Return the generated data
