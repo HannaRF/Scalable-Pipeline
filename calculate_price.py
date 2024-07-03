@@ -10,7 +10,7 @@ def create_city_graph():
     os.environ["HADOOP_HOME"] = "C:\\hadoop"
     os.environ["hadoop.home.dir"] = "C:\\hadoop"
 
-    driver = 'fastdelivery\\graphframes-0.8.3-spark3.5-s_2.13.jar'
+    driver = 'fastdelivery\\graphframes-0.8.3-spark3.5-s_2.12.jar'
 
     spark = SparkSession.builder \
         .appName("CityGraph") \
@@ -41,7 +41,7 @@ def create_city_graph():
 
     g = GraphFrame(vertices, edges)
 
-    # print('Foi!')
+    print('Foi!')
 
     
     # # Mostrar vértices e arestas
