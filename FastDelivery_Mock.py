@@ -145,7 +145,7 @@ def create_order(delay_max: int = 5) -> None:
         and values as lists of dictionaries representing each item or transaction.
     """
 
-    consumer_id = random.randint(1, 300)
+    consumer_id = random.randint(1, 200)
     store_id = random.randint(1, 30)
     product_id = random.randint(1, 150)
 
