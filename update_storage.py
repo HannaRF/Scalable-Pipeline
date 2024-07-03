@@ -1,4 +1,5 @@
 import sqlite3
+import time
 from multiprocessing import Pool, Lock
 
 lock = Lock()
@@ -40,4 +41,6 @@ def restock_inventory(quantity_to_add: int = 100) -> None:
     pool.join()
 
 if __name__ == '__main__':
-    restock_inventory(1)
+    while True:
+        restock_inventory()
+        time.sleep(60)

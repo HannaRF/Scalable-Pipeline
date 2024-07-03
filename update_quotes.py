@@ -135,4 +135,7 @@ def update_quotes():
         else:
             update_status_and_total_cost(quote.quote_id, "refused", -1)
 
-update_quotes()
+if __name__ == "__main__":
+    while True:
+        update_quotes()
+        time.sleep(10)

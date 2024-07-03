@@ -133,7 +133,7 @@ def create_fast_delivery_db(num_neighborhoods : int = 44) -> None:
 def create_order(delay_max: int = 5) -> None:
 
     # Make the process take some time, to simulate a real system
-    #time.sleep(random.randint(1, delay_max))
+    time.sleep(random.randint(1, delay_max))
     """
     Simulate the FastDelivery ERP system data.
 
