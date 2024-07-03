@@ -143,8 +143,8 @@ def create_order(delay_max: int = 5) -> None:
     """
 
     consumer_id = random.randint(1, 300)
-    store_id = random.randint(1, 300)
-    product_id = random.randint(1, 200)
+    store_id = random.randint(1, 30)
+    product_id = random.randint(1, 150)
 
     creation_date = generate_recent_date(24)  # Focus on the last 24 hours
     

@@ -51,11 +51,17 @@ def update_quotes():
         dbtable="product"
     ).load()
 
+    # Get only product_id, price and weight columns
+    products = products.select("product_id", "price", "weight")
+
     # Read the store table from the database
     stores = spark.read.format("jdbc").options(
         url="jdbc:sqlite:fastdelivery/fastdelivery.db",
         dbtable="store"
     ).load()
+
+    # Get only store_id, neighborhood and weight_tax columns
+    stores = stores.select("store_id", "neighborhood", "weight_tax")
 
     # Read the consumer table from the database
     consumers = spark.read.format("jdbc").options(
@@ -63,11 +69,28 @@ def update_quotes():
         dbtable="consumer"
     ).load()
 
+    # Get only consumer_id and neighborhood columns
+    consumers = consumers.select("consumer_id", "neighborhood")
+
     # filter the quotes that have status 'created'
     quotes = quotes.filter(col("status") == "created")
 
     # change all quotes status to 'pending'
     quotes = quotes.withColumn("status", lit("pending"))
+
+    # join the quotes with the products
+    quotes = quotes.join(products, quotes.product_id == products.product_id)
+
+    # # join the quotes with the stores
+    # quotes = quotes.join(stores, quotes.store_id == stores.store_id)
+
+    # # join the quotes with the consumers
+    # quotes = quotes.join(consumers, quotes.consumer_id == consumers.consumer_id)
+
+    # # calculate the total cost of the quote
+    # quotes = quotes.withColumn("total_cost", quotes.price * quotes.quantity + quotes.weight * quotes.weight_tax)
+
+    quotes.show()
 
     # Collect the quote_ids and status
     quote_ids = quotes.select("quote_id", "status").collect()
