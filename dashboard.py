@@ -8,6 +8,7 @@ import os
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import avg, col, to_date, max as spark_max
 from streamlit_option_menu import option_menu
+from pyspark.sql.functions import col, current_timestamp, to_timestamp
 
 # Set Hadoop home directory
 os.environ['HADOOP_HOME'] = 'C:\\hadoop'
@@ -39,31 +40,44 @@ while True:
     # Read the store table from the database
     products = spark.read.format("jdbc").options(
             url="jdbc:sqlite:fastdelivery/fastdelivery.db",
-            dbtable="store"
+            dbtable="product"
         ).load()
 
     one_hour_ago = datetime.datetime.now() - datetime.timedelta(hours=1)
 
-    quotes = quotes.withColumn("creation_date", to_date(col("creation_date")))
-    quotes_hour = quotes.filter(col("creation_date") >= one_hour_ago)
+    quotes = quotes.withColumn("creation_date", col("creation_date").cast("timestamp"))
+
+    quotes.select("creation_date").show()
+
+    # quotes_hour = quotes.filter(col("creation_date") >= one_hour_ago)
+    quotes_hour = quotes
 
     orders_hour = quotes_hour.filter(col("status") == "created")
     quotes_hour.filter(col("status") != "created")
 
     # numero de pedidos por minuto na ultima hora
-    num_pedidos_min = orders_hour.groupBy("creation_date").count()[0]
-    num_pedidos_min = num_pedidos_min / 60
+    num_pedidos_min = orders_hour.groupBy("creation_date").count()
+    num_pedidos_min = num_pedidos_min
+    # num_pedidos_min = num_pedidos_min / 60
+
+    print(num_pedidos_min)
+
 
     # numero de orçamentos por minuto na ultima hora por estado
-    num_orcamentos_min = quotes_hour.groupBy("creation_date", "status").count()[0]
+    num_orcamentos_min = quotes_hour.groupBy("creation_date", "status").sum("count")
+    num_orcamentos_min = num_orcamentos_min.agg({"sum(count)": "sum"}).collect()[0][0]
     num_orcamentos_min = num_orcamentos_min / 60
 
     # top 5 regiões com mais pedidos na ultima hora
     top5_regioes = orders_hour.groupBy("store_id").count().orderBy(col("count").desc()).limit(5)
     top5_regioes = top5_regioes.join(stores, "store_id").select("neighborhood", "count")
 
+    quotes_hour.show()
+    products.show()
+
     # tabela com 10 produtos mais em falta na ultima hora
-    products_lack = quotes_hour.join(products, "product_id").select("product_id", "quantity")
+    aux = products.select("product_id", "name")
+    products_lack = quotes_hour.join(aux, "product_id").select("product_id", "quantity")
     top10productslack = products_lack.filter(col("quantity") <= 0).groupBy("product_id").count().orderBy(col("count").desc()).limit(10)
 
     # ------------------------------------------------------------------------------------------------------
@@ -80,15 +94,15 @@ while True:
 
     col_1, col_2, col_3, col_4 = st.columns(4)
 
-    col1.metric("Orders per Minute", num_pedidos_min)
-    col2.metric("Quotes per Minute", num_orcamentos_min)
+    col_1.metric("Orders per Minute", num_pedidos_min)
+    col_2.metric("Quotes per Minute", num_orcamentos_min)
 
 
-    col3.subheader("Overall Top 5 Regions with More Orders")
-    col3.write(top5_regioes.toPandas())
+    col_3.subheader("Overall Top 5 Regions with More Orders")
+    col_3.write(top5_regioes.toPandas())
 
-    col4.subheader("Top 10 Products with More Lack")
-    col4.write(top10productslack.toPandas())
+    col_4.subheader("Top 10 Products with More Lack")
+    col_4.write(top10productslack.toPandas())
 
     store_ids = sorted([row["store_id"] for row in products.select("store_id").distinct().collect()])
     store_id = st.selectbox("Select a store ID", store_ids, index=None)
